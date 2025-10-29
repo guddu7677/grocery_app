@@ -70,6 +70,20 @@ class AuthProvider with ChangeNotifier {
     }
   }
 
+  Future<String?> updateDisplayName(String displayName) async {
+    try {
+      await _user?.updateDisplayName(displayName);
+      await _user?.reload();
+      _user = _auth.currentUser;
+      notifyListeners();
+      return null;
+    } on FirebaseAuthException catch (e) {
+      return 'Failed to update name: ${e.message}';
+    } catch (e) {
+      return 'Failed to update display name. Please try again.';
+    }
+  }
+
   Future<void> signOut() async {
     await _auth.signOut();
   }
