@@ -5,13 +5,16 @@ import '../../widgets/cart_item_card.dart';
 import '../checkout/checkout_screen.dart';
 
 class CartScreen extends StatelessWidget {
-  const CartScreen({Key? key}) : super(key: key);
+  final VoidCallback? onNavigateToHome;
+  
+  const CartScreen({Key? key, this.onNavigateToHome}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Shopping Cart'),
+        automaticallyImplyLeading: false,
         actions: [
           Consumer<CartProvider>(
             builder: (context, cart, _) {
@@ -87,7 +90,15 @@ class CartScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: 24),
                   ElevatedButton(
-                    onPressed: () => Navigator.of(context).pop(),
+                    onPressed: onNavigateToHome ?? () {
+                      // Fallback: Just show a message if callback not provided
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text('Go to Home tab to browse products'),
+                          duration: Duration(seconds: 2),
+                        ),
+                      );
+                    },
                     child: const Text('Continue Shopping'),
                   ),
                 ],

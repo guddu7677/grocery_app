@@ -106,8 +106,8 @@ class _LoginScreenState extends State<LoginScreen> {
                     controller: _passwordController,
                     decoration: InputDecoration(
                       labelText: 'Password',
-                      border: const OutlineInputBorder(),
-                      prefixIcon: const Icon(Icons.lock),
+                      border:  OutlineInputBorder(),
+                      prefixIcon:  Icon(Icons.lock),
                       suffixIcon: IconButton(
                         icon: Icon(
                           _obscurePassword
@@ -136,13 +136,13 @@ class _LoginScreenState extends State<LoginScreen> {
                   ElevatedButton(
                     onPressed: _isLoading ? null : _handleAuth,
                     style: ElevatedButton.styleFrom(
-                      padding: const EdgeInsets.all(16),
+                      padding:  EdgeInsets.all(16),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(8),
                       ),
                     ),
                     child: _isLoading
-                        ? const SizedBox(
+                        ?  SizedBox(
                             height: 20,
                             width: 20,
                             child: CircularProgressIndicator(
@@ -152,7 +152,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           )
                         : Text(
                             _isLogin ? 'Login' : 'Sign Up',
-                            style: const TextStyle(fontSize: 16),
+                            style:  TextStyle(fontSize: 16),
                           ),
                   ),
                   const SizedBox(height: 16),

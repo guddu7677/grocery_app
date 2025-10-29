@@ -243,17 +243,27 @@ class FirestoreService {
     }
   }
 
-  /// Get all orders for a specific user
+  /// Get all orders for a specific user (NO COMPOSITE INDEX NEEDED)
   Stream<List<Order>> getUserOrders(String userId) {
     return _firestore
         .collection('orders')
         .where('userId', isEqualTo: userId)
-        .orderBy('createdAt', descending: true)
         .snapshots()
         .map((snapshot) {
-      return snapshot.docs.map((doc) {
+      // Get all orders and sort them in memory
+      final orders = snapshot.docs.map((doc) {
         return Order.fromFirestore(doc.data(), doc.id);
       }).toList();
+      
+      // Sort by createdAt in memory (descending - newest first)
+      orders.sort((a, b) {
+        if (a.createdAt == null && b.createdAt == null) return 0;
+        if (a.createdAt == null) return 1;
+        if (b.createdAt == null) return -1;
+        return b.createdAt!.compareTo(a.createdAt!);
+      });
+      
+      return orders;
     });
   }
 
@@ -283,18 +293,28 @@ class FirestoreService {
     }
   }
 
-  /// Get orders by status for a user
+  /// Get orders by status for a user (NO COMPOSITE INDEX NEEDED)
   Stream<List<Order>> getOrdersByStatus(String userId, String status) {
     return _firestore
         .collection('orders')
         .where('userId', isEqualTo: userId)
         .where('status', isEqualTo: status)
-        .orderBy('createdAt', descending: true)
         .snapshots()
         .map((snapshot) {
-      return snapshot.docs.map((doc) {
+      // Get all orders matching the filters
+      final orders = snapshot.docs.map((doc) {
         return Order.fromFirestore(doc.data(), doc.id);
       }).toList();
+      
+      // Sort by createdAt in memory (descending - newest first)
+      orders.sort((a, b) {
+        if (a.createdAt == null && b.createdAt == null) return 0;
+        if (a.createdAt == null) return 1;
+        if (b.createdAt == null) return -1;
+        return b.createdAt!.compareTo(a.createdAt!);
+      });
+      
+      return orders;
     });
   }
 
