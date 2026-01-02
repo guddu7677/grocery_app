@@ -5,10 +5,6 @@ import '../models/order.dart';
 
 class FirestoreService {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-
-  // ==================== PRODUCTS ====================
-  
-  /// Get all products as a stream (real-time updates)
   Stream<List<Product>> getProducts() {
     return _firestore
         .collection('products')
@@ -20,8 +16,6 @@ class FirestoreService {
       }).toList();
     });
   }
-
-  /// Get a single product by ID
   Future<Product?> getProductById(String productId) async {
     try {
       final doc = await _firestore.collection('products').doc(productId).get();
@@ -34,8 +28,6 @@ class FirestoreService {
       rethrow;
     }
   }
-
-  /// Add a new product (admin only - use Firebase Console or Cloud Functions)
   Future<void> addProduct(Product product) async {
     try {
       await _firestore.collection('products').doc(product.id).set({
@@ -51,8 +43,6 @@ class FirestoreService {
       rethrow;
     }
   }
-
-  /// Update an existing product
   Future<void> updateProduct(String productId, Product product) async {
     try {
       await _firestore.collection('products').doc(productId).update({
@@ -67,8 +57,6 @@ class FirestoreService {
       rethrow;
     }
   }
-
-  /// Delete a product
   Future<void> deleteProduct(String productId) async {
     try {
       await _firestore.collection('products').doc(productId).delete();
@@ -77,11 +65,7 @@ class FirestoreService {
       rethrow;
     }
   }
-
-  // ==================== ADDRESSES ====================
-  
-  /// Get all addresses for a specific user
-  Stream<List<Address>> getUserAddresses(String userId) {
+    Stream<List<Address>> getUserAddresses(String userId) {
     return _firestore
         .collection('addresses')
         .where('userId', isEqualTo: userId)
@@ -93,8 +77,6 @@ class FirestoreService {
       }).toList();
     });
   }
-
-  /// Get a single address by ID
   Future<Address?> getAddressById(String addressId) async {
     try {
       final doc = await _firestore.collection('addresses').doc(addressId).get();
@@ -107,8 +89,6 @@ class FirestoreService {
       rethrow;
     }
   }
-
-  /// Add a new address for a user
   Future<String> addAddress(Address address) async {
     try {
       final docRef = await _firestore.collection('addresses').add({
@@ -129,8 +109,6 @@ class FirestoreService {
       rethrow;
     }
   }
-
-  /// Update an existing address
   Future<void> updateAddress(String addressId, Address address) async {
     try {
       await _firestore.collection('addresses').doc(addressId).update({
@@ -148,8 +126,6 @@ class FirestoreService {
       rethrow;
     }
   }
-
-  /// Delete an address
   Future<void> deleteAddress(String addressId) async {
     try {
       await _firestore.collection('addresses').doc(addressId).delete();
@@ -158,13 +134,10 @@ class FirestoreService {
       rethrow;
     }
   }
-
-  /// Set a specific address as the default for a user
   Future<void> setDefaultAddress(String userId, String addressId) async {
     try {
       final batch = _firestore.batch();
       
-      // Remove default from all user addresses
       final addresses = await _firestore
           .collection('addresses')
           .where('userId', isEqualTo: userId)
@@ -174,7 +147,6 @@ class FirestoreService {
         batch.update(doc.reference, {'isDefault': false});
       }
 
-      // Set the new default address
       final addressRef = _firestore.collection('addresses').doc(addressId);
       batch.update(addressRef, {'isDefault': true});
 
@@ -185,7 +157,6 @@ class FirestoreService {
     }
   }
 
-  /// Get the default address for a user
   Future<Address?> getDefaultAddress(String userId) async {
     try {
       final snapshot = await _firestore
@@ -205,10 +176,7 @@ class FirestoreService {
       rethrow;
     }
   }
-
-  // ==================== ORDERS ====================
   
-  /// Create a new order
   Future<String> createOrder(Order order) async {
     try {
       final docRef = await _firestore.collection('orders').add({
@@ -243,19 +211,16 @@ class FirestoreService {
     }
   }
 
-  /// Get all orders for a specific user (NO COMPOSITE INDEX NEEDED)
   Stream<List<Order>> getUserOrders(String userId) {
     return _firestore
         .collection('orders')
         .where('userId', isEqualTo: userId)
         .snapshots()
         .map((snapshot) {
-      // Get all orders and sort them in memory
       final orders = snapshot.docs.map((doc) {
         return Order.fromFirestore(doc.data(), doc.id);
       }).toList();
       
-      // Sort by createdAt in memory (descending - newest first)
       orders.sort((a, b) {
         if (a.createdAt == null && b.createdAt == null) return 0;
         if (a.createdAt == null) return 1;
@@ -267,7 +232,6 @@ class FirestoreService {
     });
   }
 
-  /// Get a single order by ID
   Future<Order?> getOrderById(String orderId) async {
     try {
       final doc = await _firestore.collection('orders').doc(orderId).get();
@@ -280,8 +244,6 @@ class FirestoreService {
       rethrow;
     }
   }
-
-  /// Update order status
   Future<void> updateOrderStatus(String orderId, String status) async {
     try {
       await _firestore.collection('orders').doc(orderId).update({
@@ -292,8 +254,6 @@ class FirestoreService {
       rethrow;
     }
   }
-
-  /// Get orders by status for a user (NO COMPOSITE INDEX NEEDED)
   Stream<List<Order>> getOrdersByStatus(String userId, String status) {
     return _firestore
         .collection('orders')
@@ -301,13 +261,11 @@ class FirestoreService {
         .where('status', isEqualTo: status)
         .snapshots()
         .map((snapshot) {
-      // Get all orders matching the filters
       final orders = snapshot.docs.map((doc) {
         return Order.fromFirestore(doc.data(), doc.id);
       }).toList();
       
-      // Sort by createdAt in memory (descending - newest first)
-      orders.sort((a, b) {
+            orders.sort((a, b) {
         if (a.createdAt == null && b.createdAt == null) return 0;
         if (a.createdAt == null) return 1;
         if (b.createdAt == null) return -1;
@@ -318,7 +276,6 @@ class FirestoreService {
     });
   }
 
-  /// Cancel an order
   Future<void> cancelOrder(String orderId) async {
     try {
       await _firestore.collection('orders').doc(orderId).update({
@@ -330,10 +287,7 @@ class FirestoreService {
     }
   }
 
-  // ==================== BATCH OPERATIONS ====================
-  
-  /// Upload multiple products at once (for initial setup)
-  Future<void> batchAddProducts(List<Product> products) async {
+    Future<void> batchAddProducts(List<Product> products) async {
     try {
       final batch = _firestore.batch();
       

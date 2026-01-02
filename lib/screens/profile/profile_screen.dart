@@ -13,34 +13,34 @@ class ProfileScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Profile'),
+        title: Text('Profile'),
         automaticallyImplyLeading: false,
       ),
       body: SingleChildScrollView(
         child: Column(
           children: [
-            const SizedBox(height: 24),
+           SizedBox(height: 24),
             CircleAvatar(
               radius: 50,
               backgroundColor: Colors.green,
               child: Text(
                 user?.displayName?.substring(0, 1).toUpperCase() ?? 'U',
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 40,
                   color: Colors.white,
                   fontWeight: FontWeight.bold,
                 ),
               ),
             ),
-            const SizedBox(height: 16),
+           SizedBox(height: 16),
             Text(
               user?.displayName ?? 'User',
-              style: const TextStyle(
+              style: TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
               ),
             ),
-            const SizedBox(height: 8),
+             SizedBox(height: 8),
             Text(
               user?.email ?? '',
               style: TextStyle(
@@ -48,7 +48,7 @@ class ProfileScreen extends StatelessWidget {
                 color: Colors.grey[600],
               ),
             ),
-            const SizedBox(height: 32),
+             SizedBox(height: 32),
             _buildProfileOption(
               context,
               icon: Icons.person_outline,
@@ -63,7 +63,7 @@ class ProfileScreen extends StatelessWidget {
               title: 'My Addresses',
               onTap: () {
                 ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text('My Addresses - Coming Soon')),
+                 SnackBar(content: Text('My Addresses - Coming Soon')),
                 );
               },
             ),
@@ -73,7 +73,7 @@ class ProfileScreen extends StatelessWidget {
               title: 'Notifications',
               onTap: () {
                 ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text('Notifications - Coming Soon')),
+                 SnackBar(content: Text('Notifications - Coming Soon')),
                 );
               },
             ),
@@ -83,7 +83,7 @@ class ProfileScreen extends StatelessWidget {
               title: 'Payment Methods',
               onTap: () {
                 ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text('Payment Methods - Coming Soon')),
+                 SnackBar(content: Text('Payment Methods - Coming Soon')),
                 );
               },
             ),
@@ -93,7 +93,7 @@ class ProfileScreen extends StatelessWidget {
               title: 'Help & Support',
               onTap: () {
                 ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text('Help & Support - Coming Soon')),
+                 SnackBar(content: Text('Help & Support - Coming Soon')),
                 );
               },
             ),
@@ -103,7 +103,7 @@ class ProfileScreen extends StatelessWidget {
               title: 'Privacy Policy',
               onTap: () {
                 ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text('Privacy Policy - Coming Soon')),
+                 SnackBar(content: Text('Privacy Policy - Coming Soon')),
                 );
               },
             ),
@@ -116,15 +116,15 @@ class ProfileScreen extends StatelessWidget {
                   context: context,
                   applicationName: 'Grocery App',
                   applicationVersion: '1.0.0',
-                  applicationIcon: const Icon(Icons.shopping_bag, size: 48, color: Colors.green),
+                  applicationIcon: Icon(Icons.shopping_bag, size: 48, color: Colors.green),
                   children: [
-                    const SizedBox(height: 16),
-                    const Text('Your one-stop shop for fresh groceries delivered to your doorstep.'),
+                     SizedBox(height: 16),
+                     Text('Your one-stop shop for fresh groceries delivered to your doorstep.'),
                   ],
                 );
               },
             ),
-            const Divider(height: 32, thickness: 1),
+           Divider(height: 32, thickness: 1),
             _buildProfileOption(
               context,
               icon: Icons.logout,
@@ -134,19 +134,19 @@ class ProfileScreen extends StatelessWidget {
                 final confirm = await showDialog<bool>(
                   context: context,
                   builder: (context) => AlertDialog(
-                    title: const Text('Logout'),
-                    content: const Text('Are you sure you want to logout?'),
+                    title: Text('Logout'),
+                    content: Text('Are you sure you want to logout?'),
                     actions: [
                       TextButton(
                         onPressed: () => Navigator.pop(context, false),
-                        child: const Text('Cancel'),
+                        child: Text('Cancel'),
                       ),
                       TextButton(
                         onPressed: () => Navigator.pop(context, true),
                         style: TextButton.styleFrom(
                           foregroundColor: Colors.red,
                         ),
-                        child: const Text('Logout'),
+                        child: Text('Logout'),
                       ),
                     ],
                   ),
@@ -157,7 +157,7 @@ class ProfileScreen extends StatelessWidget {
                 }
               },
             ),
-            const SizedBox(height: 24),
+           SizedBox(height: 24),
           ],
         ),
       ),
@@ -197,12 +197,12 @@ class ProfileScreen extends StatelessWidget {
     showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: const Text('Edit Name'),
+        title: Text('Edit Name'),
         content: Form(
           key: formKey,
           child: TextFormField(
             controller: nameController,
-            decoration: const InputDecoration(
+            decoration: InputDecoration(
               labelText: 'Display Name',
               hintText: 'Enter your name',
               prefixIcon: Icon(Icons.person),
@@ -224,7 +224,7 @@ class ProfileScreen extends StatelessWidget {
         actions: [
           TextButton(
             onPressed: () => Navigator.of(ctx).pop(),
-            child: const Text('Cancel'),
+            child: Text('Cancel'),
           ),
           ElevatedButton(
             onPressed: () async {
@@ -232,7 +232,6 @@ class ProfileScreen extends StatelessWidget {
                 final newName = nameController.text.trim();
                 Navigator.of(ctx).pop();
                 
-                // Show loading indicator
                 showDialog(
                   context: context,
                   barrierDismissible: false,
@@ -245,9 +244,9 @@ class ProfileScreen extends StatelessWidget {
                   await authProvider.updateDisplayName(newName);
                   
                   if (context.mounted) {
-                    Navigator.of(context).pop(); // Close loading dialog
+                    Navigator.of(context).pop(); 
                     ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
+                       SnackBar(
                         content: Text('Name updated successfully'),
                         backgroundColor: Colors.green,
                       ),
@@ -266,7 +265,7 @@ class ProfileScreen extends StatelessWidget {
                 }
               }
             },
-            child: const Text('Save'),
+            child: Text('Save'),
           ),
         ],
       ),

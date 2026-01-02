@@ -17,7 +17,7 @@ class ProductDetailScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Product Details'),
+        title: Text('Product Details'),
       ),
       body: FutureBuilder<Product?>(
         future: firestoreService.getProductById(productId),
@@ -25,17 +25,17 @@ class ProductDetailScreen extends StatelessWidget {
           if (snapshot.hasError) {
             return Center(
               child: Padding(
-                padding: const EdgeInsets.all(16.0),
+                padding: EdgeInsets.all(16.0),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Icon(Icons.error_outline, size: 48, color: Colors.red),
-                    const SizedBox(height: 16),
-                    const Text('Error loading product'),
-                    const SizedBox(height: 16),
+                   Icon(Icons.error_outline, size: 48, color: Colors.red),
+                   SizedBox(height: 16),
+                   Text('Error loading product'),
+                   SizedBox(height: 16),
                     ElevatedButton(
                       onPressed: () => Navigator.pop(context),
-                      child: const Text('Go Back'),
+                      child: Text('Go Back'),
                     ),
                   ],
                 ),
@@ -44,7 +44,7 @@ class ProductDetailScreen extends StatelessWidget {
           }
 
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(
+            return Center(
               child: CircularProgressIndicator(),
             );
           }
@@ -56,14 +56,14 @@ class ProductDetailScreen extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Icon(Icons.shopping_bag_outlined,
+                   Icon(Icons.shopping_bag_outlined,
                       size: 48, color: Colors.grey),
-                  const SizedBox(height: 16),
-                  const Text('Product not found'),
-                  const SizedBox(height: 16),
+                 SizedBox(height: 16),
+                 Text('Product not found'),
+                 SizedBox(height: 16),
                   ElevatedButton(
                     onPressed: () => Navigator.pop(context),
-                    child: const Text('Go Back'),
+                    child: Text('Go Back'),
                   ),
                 ],
               ),
@@ -74,7 +74,6 @@ class ProductDetailScreen extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                // Product Image
                 Container(
                   height: 300,
                   decoration: BoxDecoration(
@@ -83,25 +82,24 @@ class ProductDetailScreen extends StatelessWidget {
                   alignment: Alignment.center,
                   child: Text(
                     product.image,
-                    style: const TextStyle(fontSize: 120),
+                    style: TextStyle(fontSize: 120),
                   ),
                 ),
-                // Product Details
                 Padding(
-                  padding: const EdgeInsets.all(16),
+                  padding: EdgeInsets.all(16),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
                         product.name,
-                        style: const TextStyle(
+                        style: TextStyle(
                           fontSize: 24,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      const SizedBox(height: 8),
+                     SizedBox(height: 8),
                       Container(
-                        padding: const EdgeInsets.symmetric(
+                        padding: EdgeInsets.symmetric(
                           horizontal: 12,
                           vertical: 6,
                         ),
@@ -118,24 +116,24 @@ class ProductDetailScreen extends StatelessWidget {
                           ),
                         ),
                       ),
-                      const SizedBox(height: 16),
+                       SizedBox(height: 16),
                       Text(
                         '\$${product.price.toStringAsFixed(2)}',
-                        style: const TextStyle(
+                        style:  TextStyle(
                           color: Colors.green,
                           fontWeight: FontWeight.bold,
                           fontSize: 32,
                         ),
                       ),
-                      const SizedBox(height: 24),
-                      const Text(
+                       SizedBox(height: 24),
+                       Text(
                         'Description',
                         style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      const SizedBox(height: 8),
+                     SizedBox(height: 8),
                       Text(
                         product.description,
                         style: TextStyle(
@@ -144,8 +142,7 @@ class ProductDetailScreen extends StatelessWidget {
                           height: 1.5,
                         ),
                       ),
-                      const SizedBox(height: 32),
-                      // Action Buttons
+                       SizedBox(height: 32),
                       Row(
                         children: [
                           Expanded(
@@ -158,23 +155,23 @@ class ProductDetailScreen extends StatelessWidget {
                                   SnackBar(
                                     content:
                                         Text('${product.name} added to cart'),
-                                    duration: const Duration(seconds: 1),
+                                    duration: Duration(seconds: 1),
                                     behavior: SnackBarBehavior.floating,
                                   ),
                                 );
                               },
-                              icon: const Icon(Icons.shopping_cart_outlined),
-                              label: const Text('Add to Cart'),
+                              icon: Icon(Icons.shopping_cart_outlined),
+                              label: Text('Add to Cart'),
                               style: OutlinedButton.styleFrom(
                                 padding:
-                                    const EdgeInsets.symmetric(vertical: 16),
+                                     EdgeInsets.symmetric(vertical: 16),
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(12),
                                 ),
                               ),
                             ),
                           ),
-                          const SizedBox(width: 12),
+                         SizedBox(width: 12),
                           Expanded(
                             child: ElevatedButton.icon(
                               onPressed: () {
@@ -187,11 +184,11 @@ class ProductDetailScreen extends StatelessWidget {
                                   ),
                                 );
                               },
-                              icon: const Icon(Icons.shopping_bag),
-                              label: const Text('Buy Now'),
+                              icon: Icon(Icons.shopping_bag),
+                              label: Text('Buy Now'),
                               style: ElevatedButton.styleFrom(
                                 padding:
-                                    const EdgeInsets.symmetric(vertical: 16),
+                                     EdgeInsets.symmetric(vertical: 16),
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(12),
                                 ),
@@ -200,7 +197,7 @@ class ProductDetailScreen extends StatelessWidget {
                           ),
                         ],
                       ),
-                      const SizedBox(height: 16),
+                     SizedBox(height: 16),
                     ],
                   ),
                 ),

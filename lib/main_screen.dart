@@ -22,12 +22,11 @@ class _MainScreenState extends State<MainScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // Build screens with callback to switch tabs
     final List<Widget> screens = [
-      const HomeScreen(),
+       HomeScreen(),
       CartScreen(onNavigateToHome: () => _onTabTapped(0)),
-      const MyOrdersScreen(),
-      const ProfileScreen(),
+       MyOrdersScreen(),
+       ProfileScreen(),
     ];
 
     return Scaffold(
@@ -41,7 +40,7 @@ class _MainScreenState extends State<MainScreen> {
         type: BottomNavigationBarType.fixed,
         selectedItemColor: Colors.green,
         unselectedItemColor: Colors.grey,
-        items: const [
+        items:  [
           BottomNavigationBarItem(
             icon: Icon(Icons.home_outlined),
             activeIcon: Icon(Icons.home),

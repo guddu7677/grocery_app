@@ -40,21 +40,21 @@ class _LoginScreenState extends State<LoginScreen> {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Text(
+                   Text(
                     '🛒',
                     style: TextStyle(fontSize: 80),
                     textAlign: TextAlign.center,
                   ),
-                  const SizedBox(height: 20),
+                 SizedBox(height: 20),
                   Text(
                     _isLogin ? 'Welcome Back!' : 'Create Account',
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: 28,
                       fontWeight: FontWeight.bold,
                     ),
                     textAlign: TextAlign.center,
                   ),
-                  const SizedBox(height: 10),
+                 SizedBox(height: 10),
                   Text(
                     _isLogin
                         ? 'Sign in to continue shopping'
@@ -65,11 +65,11 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                     textAlign: TextAlign.center,
                   ),
-                  const SizedBox(height: 40),
+                 SizedBox(height: 40),
                   if (!_isLogin) ...[
                     TextFormField(
                       controller: _nameController,
-                      decoration: const InputDecoration(
+                      decoration: InputDecoration(
                         labelText: 'Full Name',
                         border: OutlineInputBorder(),
                         prefixIcon: Icon(Icons.person),
@@ -81,11 +81,11 @@ class _LoginScreenState extends State<LoginScreen> {
                         return null;
                       },
                     ),
-                    const SizedBox(height: 16),
+                   SizedBox(height: 16),
                   ],
                   TextFormField(
                     controller: _emailController,
-                    decoration: const InputDecoration(
+                    decoration: InputDecoration(
                       labelText: 'Email',
                       border: OutlineInputBorder(),
                       prefixIcon: Icon(Icons.email),
@@ -101,7 +101,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       return null;
                     },
                   ),
-                  const SizedBox(height: 16),
+                 SizedBox(height: 16),
                   TextFormField(
                     controller: _passwordController,
                     decoration: InputDecoration(
@@ -132,7 +132,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       return null;
                     },
                   ),
-                  const SizedBox(height: 24),
+                 SizedBox(height: 24),
                   ElevatedButton(
                     onPressed: _isLoading ? null : _handleAuth,
                     style: ElevatedButton.styleFrom(
@@ -155,7 +155,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             style:  TextStyle(fontSize: 16),
                           ),
                   ),
-                  const SizedBox(height: 16),
+                   SizedBox(height: 16),
                   TextButton(
                     onPressed: () {
                       setState(() {

@@ -13,7 +13,7 @@ class ProductCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       elevation: 2,
-      margin: const EdgeInsets.all(8),
+      margin: EdgeInsets.all(8),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12),
       ),
@@ -32,7 +32,6 @@ class ProductCard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
           children: [
-            // 🖼️ Product Image
             Expanded(
               flex: 3,
               child: Container(
@@ -52,7 +51,6 @@ class ProductCard extends StatelessWidget {
               ),
             ),
 
-            // 🧾 Product Info + Price + Button
             Expanded(
               flex: 2,
               child: Padding(
@@ -62,7 +60,6 @@ class ProductCard extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   mainAxisSize: MainAxisSize.max,
                   children: [
-                    // Product name and category
                     Flexible(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -70,14 +67,14 @@ class ProductCard extends StatelessWidget {
                         children: [
                           Text(
                             product.name,
-                            style: const TextStyle(
+                            style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 14,
                             ),
                             maxLines: 2,
                             overflow: TextOverflow.ellipsis,
                           ),
-                          const SizedBox(height: 2),
+                         SizedBox(height: 2),
                           Text(
                             product.category,
                             style: TextStyle(
@@ -91,14 +88,13 @@ class ProductCard extends StatelessWidget {
                       ),
                     ),
 
-                    // 💰 Price and Add-to-Cart button
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Text(
                           '\$${product.price.toStringAsFixed(2)}',
-                          style: const TextStyle(
+                          style: TextStyle(
                             color: Colors.green,
                             fontWeight: FontWeight.bold,
                             fontSize: 16,
@@ -114,7 +110,7 @@ class ProductCard extends StatelessWidget {
                               ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(
                                   content: Text('${product.name} added to cart'),
-                                  duration: const Duration(seconds: 1),
+                                  duration: Duration(seconds: 1),
                                   behavior: SnackBarBehavior.floating,
                                 ),
                               );
@@ -123,7 +119,7 @@ class ProductCard extends StatelessWidget {
                               elevation: 1,
                               backgroundColor: Colors.green,
                               foregroundColor: Colors.white,
-                              padding: const EdgeInsets.symmetric(
+                              padding: EdgeInsets.symmetric(
                                 vertical: 0,
                                 horizontal: 12,
                               ),
@@ -133,7 +129,7 @@ class ProductCard extends StatelessWidget {
                               minimumSize: Size.zero,
                               tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                             ),
-                            child: const Text(
+                            child: Text(
                               'Add',
                               style: TextStyle(fontSize: 12),
                             ),

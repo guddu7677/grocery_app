@@ -11,9 +11,9 @@ class CartItemCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+      margin: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
       child: Padding(
-        padding: const EdgeInsets.all(12),
+        padding: EdgeInsets.all(12),
         child: Row(
           children: [
             Container(
@@ -26,22 +26,22 @@ class CartItemCard extends StatelessWidget {
               alignment: Alignment.center,
               child: Text(
                 item.product.image,
-                style: const TextStyle(fontSize: 30),
+                style: TextStyle(fontSize: 30),
               ),
             ),
-            const SizedBox(width: 12),
+             SizedBox(width: 12),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
                     item.product.name,
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 16,
                     ),
                   ),
-                  const SizedBox(height: 4),
+                 SizedBox(height: 4),
                   Text(
                      '${item.product.price.toStringAsFixed(2)} each',
                     style: TextStyle(
@@ -49,10 +49,10 @@ class CartItemCard extends StatelessWidget {
                       fontSize: 14,
                     ),
                   ),
-                  const SizedBox(height: 4),
+                 SizedBox(height: 4),
                   Text(
                       'Total: ${item.totalPrice.toStringAsFixed(2)}',
-                    style: const TextStyle(
+                    style: TextStyle(
                       color: Colors.green,
                       fontWeight: FontWeight.bold,
                       fontSize: 14,
@@ -69,8 +69,8 @@ class CartItemCard extends StatelessWidget {
               child: Row(
                 children: [
                   IconButton(
-                    icon: const Icon(Icons.remove, size: 18),
-                    constraints: const BoxConstraints(
+                    icon: Icon(Icons.remove, size: 18),
+                    constraints: BoxConstraints(
                       minWidth: 32,
                       minHeight: 32,
                     ),
@@ -87,15 +87,15 @@ class CartItemCard extends StatelessWidget {
                     padding:  EdgeInsets.symmetric(horizontal: 8),
                     child: Text(
                       '${item.quantity}',
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                   ),
                   IconButton(
-                    icon: const Icon(Icons.add, size: 18),
-                    constraints: const BoxConstraints(
+                    icon: Icon(Icons.add, size: 18),
+                    constraints: BoxConstraints(
                       minWidth: 32,
                       minHeight: 32,
                     ),

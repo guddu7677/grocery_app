@@ -1,6 +1,3 @@
-// Run this script once to upload dummy products to Firestore
-// You can create a button in your app to run this, or use Firebase Console
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../data/dummy_products.dart';
 
@@ -26,14 +23,13 @@ class DataMigration {
       }
       
       await batch.commit();
-      print('✅ Successfully uploaded ${dummyProducts.length} products to Firestore!');
+      print(' Successfully uploaded ${dummyProducts.length} products to Firestore!');
     } catch (e) {
-      print('❌ Error uploading products: $e');
+      print(' Error uploading products: $e');
       throw e;
     }
   }
 
-  // Check if products already exist
   Future<bool> productsExist() async {
     try {
       final snapshot = await _firestore.collection('products').limit(1).get();
@@ -44,7 +40,6 @@ class DataMigration {
     }
   }
 
-  // Delete all products (use with caution!)
   Future<void> deleteAllProducts() async {
     try {
       print('Deleting all products...');
@@ -56,33 +51,10 @@ class DataMigration {
       }
       
       await batch.commit();
-      print('✅ All products deleted');
+      print(' All products deleted');
     } catch (e) {
-      print('❌ Error deleting products: $e');
+      print(' Error deleting products: $e');
       throw e;
     }
   }
 }
-
-// Usage example - Add this to a debug screen or button in your app:
-/*
-  ElevatedButton(
-    onPressed: () async {
-      final migration = DataMigration();
-      
-      // Check if products already exist
-      final exists = await migration.productsExist();
-      
-      if (exists) {
-        print('Products already exist in Firestore');
-        // Optionally show dialog asking if user wants to re-upload
-      } else {
-        await migration.uploadProductsToFirestore();
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Products uploaded successfully!')),
-        );
-      }
-    },
-    child: const Text('Upload Products to Firestore'),
-  ),
-*/

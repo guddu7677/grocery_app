@@ -1,4 +1,3 @@
-// ==================== order_confirmation_screen.dart (FIXED) ====================
 import 'package:flutter/material.dart';
 import 'package:grocery_app/service/firestore_service.dart';
 import 'package:provider/provider.dart';
@@ -10,7 +9,7 @@ class OrderConfirmationScreen extends StatefulWidget {
   final Product product;
   final Map<String, String> address;
 
-  const OrderConfirmationScreen({
+   OrderConfirmationScreen({
     Key? key,
     required this.product,
     required this.address,
@@ -43,12 +42,10 @@ class _OrderConfirmationScreenState extends State<OrderConfirmationScreen> {
         throw Exception('User not authenticated. Please login again.');
       }
 
-      // Calculate amounts
       const double deliveryFee = 5.0;
       final double subtotal = widget.product.price;
       final double totalAmount = subtotal + deliveryFee;
 
-      // Create order object
       final order = Order(
         userId: user.uid,
         productId: widget.product.id,
@@ -65,7 +62,6 @@ class _OrderConfirmationScreenState extends State<OrderConfirmationScreen> {
         estimatedDelivery: DateTime.now().add(const Duration(days: 3)),
       );
 
-      // Save to Firestore
       final orderId = await _firestoreService.createOrder(order);
 
       if (!mounted) return;
@@ -87,7 +83,7 @@ class _OrderConfirmationScreenState extends State<OrderConfirmationScreen> {
         SnackBar(
           content: Text('Failed to place order: ${e.toString()}'),
           backgroundColor: Colors.red,
-          duration: const Duration(seconds: 5),
+          duration: Duration(seconds: 5),
           action: SnackBarAction(
             label: 'Retry',
             textColor: Colors.white,
@@ -100,32 +96,31 @@ class _OrderConfirmationScreenState extends State<OrderConfirmationScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // Show error state
     if (_hasError) {
       return Scaffold(
         appBar: AppBar(
-          title: const Text('Order Failed'),
+          title: Text('Order Failed'),
         ),
         body: Center(
           child: Padding(
-            padding: const EdgeInsets.all(24.0),
+            padding: EdgeInsets.all(24.0),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Icon(
+                 Icon(
                   Icons.error_outline,
                   color: Colors.red,
                   size: 80,
                 ),
-                const SizedBox(height: 24),
-                const Text(
+                 SizedBox(height: 24),
+                 Text(
                   'Order Placement Failed',
                   style: TextStyle(
                     fontSize: 24,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                const SizedBox(height: 16),
+                 SizedBox(height: 16),
                 Text(
                   _errorMessage ?? 'An unexpected error occurred',
                   textAlign: TextAlign.center,
@@ -134,7 +129,7 @@ class _OrderConfirmationScreenState extends State<OrderConfirmationScreen> {
                     color: Colors.grey[600],
                   ),
                 ),
-                const SizedBox(height: 32),
+                 SizedBox(height: 32),
                 ElevatedButton.icon(
                   onPressed: () {
                     setState(() {
@@ -142,21 +137,21 @@ class _OrderConfirmationScreenState extends State<OrderConfirmationScreen> {
                     });
                     _placeOrder();
                   },
-                  icon: const Icon(Icons.refresh),
-                  label: const Text('Retry'),
+                  icon:  Icon(Icons.refresh),
+                  label:  Text('Retry'),
                   style: ElevatedButton.styleFrom(
-                    padding: const EdgeInsets.symmetric(
+                    padding:  EdgeInsets.symmetric(
                       horizontal: 32,
                       vertical: 16,
                     ),
                   ),
                 ),
-                const SizedBox(height: 12),
+                 SizedBox(height: 12),
                 TextButton(
                   onPressed: () {
                     Navigator.of(context).pop();
                   },
-                  child: const Text('Go Back'),
+                  child: Text('Go Back'),
                 ),
               ],
             ),
@@ -165,14 +160,13 @@ class _OrderConfirmationScreenState extends State<OrderConfirmationScreen> {
       );
     }
 
-    // Show loading state
     if (!_isOrderPlaced) {
       return Scaffold(
         appBar: AppBar(
-          title: const Text('Processing Order'),
+          title: Text('Processing Order'),
           automaticallyImplyLeading: false,
         ),
-        body: const Center(
+        body: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -199,31 +193,28 @@ class _OrderConfirmationScreenState extends State<OrderConfirmationScreen> {
       );
     }
 
-    // Show success state
     const double deliveryFee = 5.0;
     final double subtotal = widget.product.price;
     final double totalAmount = subtotal + deliveryFee;
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Order Confirmation'),
+        title: Text('Order Confirmation'),
         automaticallyImplyLeading: false,
       ),
       body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16),
+        padding: EdgeInsets.all(16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            // Success Icon
-            const Icon(
+             Icon(
               Icons.check_circle,
               color: Colors.green,
               size: 80,
             ),
-            const SizedBox(height: 16),
+             SizedBox(height: 16),
             
-            // Success Message
-            const Text(
+             Text(
               'Order Confirmed!',
               textAlign: TextAlign.center,
               style: TextStyle(
@@ -231,9 +222,8 @@ class _OrderConfirmationScreenState extends State<OrderConfirmationScreen> {
                 fontWeight: FontWeight.bold,
               ),
             ),
-            const SizedBox(height: 8),
+             SizedBox(height: 8),
             
-            // Order ID
             if (_orderId != null)
               Text(
                 'Order ID: ${_orderId!.substring(0, 8).toUpperCase()}',
@@ -244,7 +234,7 @@ class _OrderConfirmationScreenState extends State<OrderConfirmationScreen> {
                   fontWeight: FontWeight.w500,
                 ),
               ),
-            const SizedBox(height: 4),
+             SizedBox(height: 4),
             Text(
               'Your order has been placed successfully',
               textAlign: TextAlign.center,
@@ -253,9 +243,8 @@ class _OrderConfirmationScreenState extends State<OrderConfirmationScreen> {
                 color: Colors.grey[600],
               ),
             ),
-            const SizedBox(height: 32),
+             SizedBox(height: 32),
             
-            // Order Details Card
             Card(
               elevation: 2,
               child: Padding(
@@ -263,17 +252,16 @@ class _OrderConfirmationScreenState extends State<OrderConfirmationScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
+                     Text(
                       'Order Details',
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    const SizedBox(height: 16),
+                     SizedBox(height: 16),
                     Row(
                       children: [
-                        // Product Image
                         Container(
                           width: 80,
                           height: 80,
@@ -284,24 +272,23 @@ class _OrderConfirmationScreenState extends State<OrderConfirmationScreen> {
                           alignment: Alignment.center,
                           child: Text(
                             widget.product.image,
-                            style: const TextStyle(fontSize: 40),
+                            style: TextStyle(fontSize: 40),
                           ),
                         ),
-                        const SizedBox(width: 16),
+                         SizedBox(width: 16),
                         
-                        // Product Details
                         Expanded(
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
                                 widget.product.name,
-                                style: const TextStyle(
+                                style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   fontSize: 16,
                                 ),
                               ),
-                              const SizedBox(height: 4),
+                               SizedBox(height: 4),
                               Text(
                                 widget.product.category,
                                 style: TextStyle(
@@ -309,10 +296,10 @@ class _OrderConfirmationScreenState extends State<OrderConfirmationScreen> {
                                   color: Colors.grey[600],
                                 ),
                               ),
-                              const SizedBox(height: 8),
+                               SizedBox(height: 8),
                               Text(
                                 '₹${widget.product.price.toStringAsFixed(2)}',
-                                style: const TextStyle(
+                                style:  TextStyle(
                                   color: Colors.green,
                                   fontWeight: FontWeight.bold,
                                   fontSize: 20,
@@ -327,17 +314,16 @@ class _OrderConfirmationScreenState extends State<OrderConfirmationScreen> {
                 ),
               ),
             ),
-            const SizedBox(height: 16),
+             SizedBox(height: 16),
             
-            // Delivery Address Card
             Card(
               elevation: 2,
               child: Padding(
-                padding: const EdgeInsets.all(16),
+                padding: EdgeInsets.all(16),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Row(
+                     Row(
                       children: [
                         Icon(Icons.location_on, size: 20),
                         SizedBox(width: 8),
@@ -350,15 +336,15 @@ class _OrderConfirmationScreenState extends State<OrderConfirmationScreen> {
                         ),
                       ],
                     ),
-                    const SizedBox(height: 12),
+                     SizedBox(height: 12),
                     Text(
                       widget.address['name'] ?? '',
-                      style: const TextStyle(
+                      style:  TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.w600,
                       ),
                     ),
-                    const SizedBox(height: 4),
+                     SizedBox(height: 4),
                     Text(
                       widget.address['phone'] ?? '',
                       style: TextStyle(
@@ -366,7 +352,7 @@ class _OrderConfirmationScreenState extends State<OrderConfirmationScreen> {
                         color: Colors.grey[700],
                       ),
                     ),
-                    const SizedBox(height: 8),
+                     SizedBox(height: 8),
                     Text(
                       widget.address['addressLine1'] ?? '',
                       style: TextStyle(
@@ -375,7 +361,7 @@ class _OrderConfirmationScreenState extends State<OrderConfirmationScreen> {
                       ),
                     ),
                     if (widget.address['addressLine2']?.isNotEmpty ?? false) ...[
-                      const SizedBox(height: 4),
+                       SizedBox(height: 4),
                       Text(
                         widget.address['addressLine2']!,
                         style: TextStyle(
@@ -384,7 +370,7 @@ class _OrderConfirmationScreenState extends State<OrderConfirmationScreen> {
                         ),
                       ),
                     ],
-                    const SizedBox(height: 4),
+                     SizedBox(height: 4),
                     Text(
                       '${widget.address['city']}, ${widget.address['state']} ${widget.address['zipCode']}',
                       style: TextStyle(
@@ -396,34 +382,33 @@ class _OrderConfirmationScreenState extends State<OrderConfirmationScreen> {
                 ),
               ),
             ),
-            const SizedBox(height: 16),
+             SizedBox(height: 16),
             
-            // Price Summary Card
             Card(
               color: Colors.blue[50],
               elevation: 2,
               child: Padding(
-                padding: const EdgeInsets.all(16),
+                padding: EdgeInsets.all(16),
                 child: Column(
                   children: [
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        const Text(
+                         Text(
                           'Subtotal:',
                           style: TextStyle(fontSize: 16),
                         ),
                         Text(
                           '₹${subtotal.toStringAsFixed(2)}',
-                          style: const TextStyle(fontSize: 16),
+                          style: TextStyle(fontSize: 16),
                         ),
                       ],
                     ),
-                    const SizedBox(height: 8),
+                     SizedBox(height: 8),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        const Text(
+                         Text(
                           'Delivery Fee:',
                           style: TextStyle(fontSize: 16),
                         ),
@@ -436,11 +421,11 @@ class _OrderConfirmationScreenState extends State<OrderConfirmationScreen> {
                         ),
                       ],
                     ),
-                    const Divider(height: 24, thickness: 1),
+                     Divider(height: 24, thickness: 1),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        const Text(
+                         Text(
                           'Total:',
                           style: TextStyle(
                             fontSize: 20,
@@ -449,7 +434,7 @@ class _OrderConfirmationScreenState extends State<OrderConfirmationScreen> {
                         ),
                         Text(
                           '₹${totalAmount.toStringAsFixed(2)}',
-                          style: const TextStyle(
+                          style: TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.bold,
                             color: Colors.green,
@@ -461,11 +446,10 @@ class _OrderConfirmationScreenState extends State<OrderConfirmationScreen> {
                 ),
               ),
             ),
-            const SizedBox(height: 24),
+             SizedBox(height: 24),
             
-            // Delivery Info Banner
             Container(
-              padding: const EdgeInsets.all(16),
+              padding: EdgeInsets.all(16),
               decoration: BoxDecoration(
                 color: Colors.amber[50],
                 borderRadius: BorderRadius.circular(12),
@@ -474,7 +458,7 @@ class _OrderConfirmationScreenState extends State<OrderConfirmationScreen> {
               child: Row(
                 children: [
                   Icon(Icons.info_outline, color: Colors.amber[800]),
-                  const SizedBox(width: 12),
+                   SizedBox(width: 12),
                   Expanded(
                     child: Text(
                       'Your order will be delivered in 2-3 business days',
@@ -488,35 +472,33 @@ class _OrderConfirmationScreenState extends State<OrderConfirmationScreen> {
                 ],
               ),
             ),
-            const SizedBox(height: 24),
+             SizedBox(height: 24),
             
-            // Continue Shopping Button
             ElevatedButton(
               onPressed: () {
                 Navigator.of(context).popUntil((route) => route.isFirst);
               },
               style: ElevatedButton.styleFrom(
-                padding: const EdgeInsets.symmetric(vertical: 16),
+                padding:  EdgeInsets.symmetric(vertical: 16),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12),
                 ),
               ),
-              child: const Text(
+              child:  Text(
                 'Continue Shopping',
                 style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
               ),
             ),
-            const SizedBox(height: 12),
+             SizedBox(height: 12),
             
-            // View Orders Button
             OutlinedButton.icon(
               onPressed: () {
                 Navigator.of(context).popUntil((route) => route.isFirst);
                 
-                Future.delayed(const Duration(milliseconds: 500), () {
+                Future.delayed( Duration(milliseconds: 500), () {
                   if (context.mounted) {
                     ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
+                       SnackBar(
                         content: Text('Go to "Orders" tab to track your order'),
                         duration: Duration(seconds: 3),
                         behavior: SnackBarBehavior.floating,
@@ -525,19 +507,19 @@ class _OrderConfirmationScreenState extends State<OrderConfirmationScreen> {
                   }
                 });
               },
-              icon: const Icon(Icons.receipt_long),
-              label: const Text(
+              icon:  Icon(Icons.receipt_long),
+              label:  Text(
                 'View My Orders',
                 style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
               ),
               style: OutlinedButton.styleFrom(
-                padding: const EdgeInsets.symmetric(vertical: 16),
+                padding: EdgeInsets.symmetric(vertical: 16),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12),
                 ),
               ),
             ),
-            const SizedBox(height: 16),
+             SizedBox(height: 16),
           ],
         ),
       ),

@@ -9,7 +9,7 @@ import 'order_confirmation_screen.dart';
 class AddressInputScreen extends StatefulWidget {
   final Product product;
 
-  const AddressInputScreen({Key? key, required this.product}) : super(key: key);
+  const AddressInputScreen({super.key, required this.product});
 
   @override
   State<AddressInputScreen> createState() => _AddressInputScreenState();
@@ -76,7 +76,6 @@ class _AddressInputScreenState extends State<AddressInputScreen> {
           'zipCode': _zipCodeController.text.trim(),
         };
 
-        // Save address to Firestore if checkbox is checked
         if (_saveAddress && _selectedAddress == null) {
           final newAddress = Address(
             userId: user.uid,
@@ -124,17 +123,16 @@ class _AddressInputScreenState extends State<AddressInputScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Delivery Address'),
+        title:  Text('Delivery Address'),
       ),
       body: Form(
         key: _formKey,
         child: ListView(
-          padding: const EdgeInsets.all(16),
+          padding: EdgeInsets.all(16),
           children: [
-            // Product Summary Card
             Card(
               child: Padding(
-                padding: const EdgeInsets.all(16),
+                padding:  EdgeInsets.all(16),
                 child: Row(
                   children: [
                     Container(
@@ -147,27 +145,27 @@ class _AddressInputScreenState extends State<AddressInputScreen> {
                       alignment: Alignment.center,
                       child: Text(
                         widget.product.image,
-                        style: const TextStyle(fontSize: 30),
+                        style: TextStyle(fontSize: 30),
                       ),
                     ),
-                    const SizedBox(width: 12),
+                     SizedBox(width: 12),
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
                             widget.product.name,
-                            style: const TextStyle(
+                            style:  TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 16,
                             ),
                             maxLines: 2,
                             overflow: TextOverflow.ellipsis,
                           ),
-                          const SizedBox(height: 4),
+                           SizedBox(height: 4),
                           Text(
                             '\$${widget.product.price.toStringAsFixed(2)}',
-                            style: const TextStyle(
+                            style:  TextStyle(
                               color: Colors.green,
                               fontWeight: FontWeight.bold,
                               fontSize: 18,
@@ -180,9 +178,8 @@ class _AddressInputScreenState extends State<AddressInputScreen> {
                 ),
               ),
             ),
-            const SizedBox(height: 16),
+             SizedBox(height: 16),
             
-            // Saved Addresses Section
             if (user != null)
               StreamBuilder<List<Address>>(
                 stream: _firestoreService.getUserAddresses(user.uid),
@@ -191,19 +188,19 @@ class _AddressInputScreenState extends State<AddressInputScreen> {
                     return Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text(
+                        Text(
                           'Saved Addresses',
                           style: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                        const SizedBox(height: 8),
+                         SizedBox(height: 8),
                         ...snapshot.data!.map((address) {
                           final isSelected = _selectedAddress?.id == address.id;
                           return Card(
                             color: isSelected ? Colors.blue[50] : null,
-                            margin: const EdgeInsets.only(bottom: 8),
+                            margin: EdgeInsets.only(bottom: 8),
                             child: ListTile(
                               leading: Icon(
                                 isSelected
@@ -219,7 +216,7 @@ class _AddressInputScreenState extends State<AddressInputScreen> {
                               ),
                               trailing: address.isDefault
                                   ? Chip(
-                                      label: const Text(
+                                      label: Text(
                                         'Default',
                                         style: TextStyle(fontSize: 10),
                                       ),
@@ -230,19 +227,19 @@ class _AddressInputScreenState extends State<AddressInputScreen> {
                             ),
                           );
                         }).toList(),
-                        const Divider(height: 32),
-                        const Text(
+                         Divider(height: 32),
+                         Text(
                           'Or Enter New Address',
                           style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.w500,
                           ),
                         ),
-                        const SizedBox(height: 16),
+                       SizedBox(height: 16),
                       ],
                     );
                   }
-                  return const Column(
+                  return Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
@@ -258,10 +255,9 @@ class _AddressInputScreenState extends State<AddressInputScreen> {
                 },
               ),
             
-            // Address Form Fields
             TextFormField(
               controller: _nameController,
-              decoration: const InputDecoration(
+              decoration:InputDecoration(
                 labelText: 'Full Name',
                 prefixIcon: Icon(Icons.person),
                 border: OutlineInputBorder(),
@@ -273,10 +269,10 @@ class _AddressInputScreenState extends State<AddressInputScreen> {
                 return null;
               },
             ),
-            const SizedBox(height: 16),
+           SizedBox(height: 16),
             TextFormField(
               controller: _phoneController,
-              decoration: const InputDecoration(
+              decoration:InputDecoration(
                 labelText: 'Phone Number',
                 prefixIcon: Icon(Icons.phone),
                 border: OutlineInputBorder(),
@@ -292,10 +288,10 @@ class _AddressInputScreenState extends State<AddressInputScreen> {
                 return null;
               },
             ),
-            const SizedBox(height: 16),
+             SizedBox(height: 16),
             TextFormField(
               controller: _addressLine1Controller,
-              decoration: const InputDecoration(
+              decoration:  InputDecoration(
                 labelText: 'Address Line 1',
                 prefixIcon: Icon(Icons.home),
                 border: OutlineInputBorder(),
@@ -307,22 +303,22 @@ class _AddressInputScreenState extends State<AddressInputScreen> {
                 return null;
               },
             ),
-            const SizedBox(height: 16),
+             SizedBox(height: 16),
             TextFormField(
               controller: _addressLine2Controller,
-              decoration: const InputDecoration(
+              decoration:  InputDecoration(
                 labelText: 'Address Line 2 (Optional)',
                 prefixIcon: Icon(Icons.home_outlined),
                 border: OutlineInputBorder(),
               ),
             ),
-            const SizedBox(height: 16),
+           SizedBox(height: 16),
             Row(
               children: [
                 Expanded(
                   child: TextFormField(
                     controller: _cityController,
-                    decoration: const InputDecoration(
+                    decoration: InputDecoration(
                       labelText: 'City',
                       prefixIcon: Icon(Icons.location_city),
                       border: OutlineInputBorder(),
@@ -335,11 +331,11 @@ class _AddressInputScreenState extends State<AddressInputScreen> {
                     },
                   ),
                 ),
-                const SizedBox(width: 16),
+                 SizedBox(width: 16),
                 Expanded(
                   child: TextFormField(
                     controller: _stateController,
-                    decoration: const InputDecoration(
+                    decoration: InputDecoration(
                       labelText: 'State',
                       prefixIcon: Icon(Icons.map),
                       border: OutlineInputBorder(),
@@ -354,10 +350,10 @@ class _AddressInputScreenState extends State<AddressInputScreen> {
                 ),
               ],
             ),
-            const SizedBox(height: 16),
+             SizedBox(height: 16),
             TextFormField(
               controller: _zipCodeController,
-              decoration: const InputDecoration(
+              decoration: InputDecoration(
                 labelText: 'ZIP Code',
                 prefixIcon: Icon(Icons.pin_drop),
                 border: OutlineInputBorder(),
@@ -370,9 +366,9 @@ class _AddressInputScreenState extends State<AddressInputScreen> {
                 return null;
               },
             ),
-            const SizedBox(height: 16),
+            SizedBox(height: 16),
             CheckboxListTile(
-              title: const Text('Save this address for future orders'),
+              title:Text('Save this address for future orders'),
               value: _saveAddress,
               onChanged: _selectedAddress == null
                   ? (value) {
@@ -381,17 +377,17 @@ class _AddressInputScreenState extends State<AddressInputScreen> {
                   : null,
               controlAffinity: ListTileControlAffinity.leading,
             ),
-            const SizedBox(height: 24),
+            SizedBox(height: 24),
             ElevatedButton(
               onPressed: _isLoading ? null : _submitAddress,
               style: ElevatedButton.styleFrom(
-                padding: const EdgeInsets.symmetric(vertical: 16),
+                padding: EdgeInsets.symmetric(vertical: 16),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12),
                 ),
               ),
               child: _isLoading
-                  ? const SizedBox(
+                  ? SizedBox(
                       height: 20,
                       width: 20,
                       child: CircularProgressIndicator(
@@ -399,7 +395,7 @@ class _AddressInputScreenState extends State<AddressInputScreen> {
                         valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
                       ),
                     )
-                  : const Text(
+                  : Text(
                       'Proceed to Payment',
                       style: TextStyle(fontSize: 16),
                     ),
